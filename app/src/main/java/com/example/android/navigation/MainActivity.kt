@@ -26,18 +26,27 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.ActivityMainBinding
+//yandex post
+//https://habr.com/ru/company/yandex/blog/265569/
 
+//https://medium.com/udacity/udacity-self-driving-car-engineer-nanodegree-projects-12823ff1cd21
+
+//learn open Computer Vision in three hours
+//https://www.youtube.com/watch?v=WQeoO7MI0Bs&feature=emb_rel_end
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         @Suppress("UNUSED_VARIABLE")
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-        // TODO (01) Find the navController from myNavHostFragment
-        // Since we're using KTX, you can call this.findNavController
-        // TODO (02) Link the navController to our ActionBar
-        // By calling NavigationUI.setupActionBarWithNavController
+        val navController = this.findNavController(R.id.myNavHostFragment)
+        NavigationUI.setupActionBarWithNavController(this, navController)
+
     }
 
-    // TODO (03) Override onSupportNavigateUp
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = this.findNavController(R.id.myNavHostFragment)
+        return navController.navigateUp()
+    }
+// TODO (03) Override onSupportNavigateUp
     // Find the navController and then call navController.navigateUp
 }
