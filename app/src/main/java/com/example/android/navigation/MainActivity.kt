@@ -34,19 +34,23 @@ import com.example.android.navigation.databinding.ActivityMainBinding
 //learn open Computer Vision in three hours
 //https://www.youtube.com/watch?v=WQeoO7MI0Bs&feature=emb_rel_end
 class MainActivity : AppCompatActivity() {
+    private lateinit var drawerLayout: DrawerLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         @Suppress("UNUSED_VARIABLE")
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        drawerLayout = binding.drawerLayout
         val navController = this.findNavController(R.id.myNavHostFragment)
-        NavigationUI.setupActionBarWithNavController(this, navController)
+        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+        NavigationUI.setupWithNavController(binding.navView, navController)
 
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.myNavHostFragment)
-        return navController.navigateUp()
+        //return navController.navigateUp()
+        //return NavigationUI.navigateUp(drawerLayout, navController)
+        return NavigationUI.navigateUp(navController, drawerLayout)
     }
-// TODO (03) Override onSupportNavigateUp
-    // Find the navController and then call navController.navigateUp
+
 }

@@ -35,7 +35,6 @@ import android.content.pm.ResolveInfo
 import android.content.pm.PackageManager
 
 
-
 class GameWonFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -48,8 +47,45 @@ class GameWonFragment : Fragment() {
         }
         var args = GameWonFragmentArgs.fromBundle(arguments!!)
         Toast.makeText(context,
-        "NumCorrect: ${args.numCorrect},NumQuestions: ${args.numQuestions}",
-        Toast.LENGTH_LONG).show()
+                "NumCorrect: ${args.numCorrect},NumQuestions: ${args.numQuestions}",
+                Toast.LENGTH_LONG).show()
+        setHasOptionsMenu(true)
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.winner_menu, menu)
+        //check if the activity resolves
+        if(null == getShareIntent().resolveActivity(activity!!.packageManager)){
+            //hide the menu item if it does't resolve
+            menu?.findItem(R.id.share)?.setVisible(false)
+        }
+    }
+
+    private fun getShareIntent() : Intent{
+        var args = GameWonFragmentArgs.fromBundle(arguments!!)
+        /*
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.setType("text/plain")
+                .putExtra(Intent.EXTRA_TEXT,
+                getString(R.string.share_success_text, args.numCorrect,
+                args.numQuestions))
+        return shareIntent*/
+        return ShareCompat.IntentBuilder.from(activity!!)
+                .setText(getString(R.string.share_success_text, args.numCorrect, args.numQuestions))
+                        .setType("text/plain")
+                .intent
+    }
+
+    private fun shareSuccess(){
+        startActivity(getShareIntent())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item!!.itemId){
+            R.id.share -> shareSuccess()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
