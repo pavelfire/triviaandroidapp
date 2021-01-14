@@ -16,7 +16,6 @@
 
 package com.example.android.navigation
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
@@ -31,9 +30,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.android.navigation.databinding.FragmentGameWonBinding
-import android.content.pm.ResolveInfo
-import android.content.pm.PackageManager
 
+//https://developer.android.com/guide/navigation/navigation-ui
 
 class GameWonFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
